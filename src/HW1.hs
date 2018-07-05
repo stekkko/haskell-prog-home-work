@@ -28,7 +28,7 @@ validate x = mod (sumDigits $ doubleEveryOther $ toDigits x) 10 == 0
 type Peg = String
 type Move = (Peg, Peg)
 
---not working
+--Working!!!
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi 1 a b c = [(a, b)]
-hanoi x a b c = (if odd x then (a, b) : (hanoi (x - 1) a b c) else (a, c) : (hanoi (x - 1) a c b))
+hanoi 1 start end = (start, end) : []
+hanoi n start end stock = (hanoi (n - 1) start stock end) ++ [(start, end)] ++ (hanoi (n - 1) stock end start)
