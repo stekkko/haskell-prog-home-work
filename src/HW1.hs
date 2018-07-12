@@ -30,5 +30,5 @@ type Move = (Peg, Peg)
 
 --Working!!!
 hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
-hanoi 1 start end = (start, end) : []
+hanoi 1 start end _ = (start, end) : []
 hanoi n start end stock = (hanoi (n - 1) start stock end) ++ [(start, end)] ++ (hanoi (n - 1) stock end start)
