@@ -1,10 +1,10 @@
 name:           homeworks
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/hw1#readme>
-homepage:       https://github.com/githubuser/hw1#readme
-bug-reports:    https://github.com/githubuser/hw1/issues
+description:    Please see the README on GitHub at <https://github.com/MINER9000/haskell-prog-home-work/blob/master/README.md>
+homepage:       https://github.com/MINER9000/haskell-prog-home-work
+bug-reports:    https://github.com/MINER9000/haskell-prog-home-work/issues
 author:         Daniil Smirnov
-maintainer:     example@example.com
+maintainer:     wertufan@mail.ru
 copyright:      2018 Daniil Smirnov
 license:        BSD3
 license-file:   LICENSE
@@ -16,11 +16,12 @@ extra-source-files:     ChangeLog.md
 
 source-repository head
   type:               git
-  location:           https://github.com/githubuser/hw1
+  location:           https://github.com/MINER9000/haskell-prog-home-work
 
 library
   exposed-modules:    HW1
                     , LogAnalysis
+                    , Log
   hs-source-dirs:     src
   build-depends:      base >=4.7 && <5
   ghc-options:        -Wall
