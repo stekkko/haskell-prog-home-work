@@ -3,10 +3,10 @@ module Golf where
 --exercize 1--
 skip :: [a] -> Int -> [a]
 skip [] _ = []
-skip xs n = if (n > length xs) 
+skip xs n = if n > length xs
             then [] 
             else let sp = splitAt n xs 
-                 in (last $ fst sp) : skip (snd sp) n
+                 in last $ fst sp : skip (snd sp) n
 
 skips :: [a] -> [[a]]
 skips []    = []
