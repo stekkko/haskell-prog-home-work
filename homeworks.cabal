@@ -22,6 +22,7 @@ library
   exposed-modules:    HW1
                     , LogAnalysis
                     , Log
+                    , Golf
   hs-source-dirs:     src
   build-depends:      base >=4.7 && <5
   ghc-options:        -Wall
