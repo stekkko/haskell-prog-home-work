@@ -4,14 +4,11 @@ module HW4 where
 fun1 :: [Integer] -> Integer
 fun1 = product . map (subtract 2) . filter even
 
-checkN :: Integer -> Integer
-checkN n = if even n then n `div` 2 else n * 3 + 1
-
 fun2 :: Integer -> Integer
 fun2 = sum . filter even . takeWhile (> 1) . iterate checkN
-
-fun2' :: Integer -> Integer
-fun2' = sum . filter even . takeWhile (> 1) . iterate (\n -> if even n then n `div` 2 else n * 3 + 1)
+  where 
+    checkN n = if even n then n `div` 2 else n * 3 + 1
+        
 
 --exercise 2
 data Tree a = Leaf
@@ -34,12 +31,18 @@ foldTree = foldr insert Leaf
 
 --exercise 3
 xor :: [Bool] -> Bool
-xor = odd . length . filter id
+xor = foldr (/=) False
 
 map' :: (a -> b) -> [a] -> [b]
 map' f = foldr ((:) . f) []
 
 --exercise 4
+
+seiveEratosphen :: [Int]
+seiveEratosphen = filterPrime [2..]
+  where
+    filterPrime (p:xs) = p : filterPrime [x | x <- xs, x `mod` p /= 0]
+
 seiveSundaram :: Int -> [Int]
 seiveSundaram n = (map ((+1) . (*2)) . filter (`notElem` badList n)) [1..n]
 
