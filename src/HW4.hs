@@ -41,6 +41,7 @@ map' f = foldr ((:) . f) []
 seiveEratosphen :: [Int]
 seiveEratosphen = filterPrime [2..]
   where
+    filterPrime [] = []
     filterPrime (p:xs) = p : filterPrime [x | x <- xs, x `mod` p /= 0]
 
 seiveSundaram :: Int -> [Int]
