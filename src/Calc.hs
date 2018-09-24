@@ -3,7 +3,7 @@ module Calc where
 
 import ExprT
 import Parser
---import qualified Data.Map as M
+import qualified Data.Map.Strict as M
 
 --exersize 1
 eval :: ExprT -> Integer
@@ -57,26 +57,41 @@ instance Expr Mod7 where
 
 testExp :: Expr a => Maybe a
 testExp     = parseExp lit add mul "(3 * -4) + 5"
-testInteger = testExp :: Maybe Integer
-testBool    = testExp :: Maybe Bool
-testMM      = testExp :: Maybe MinMax
-testSat     = testExp :: Maybe Mod7
+  --testInteger = testExp :: Maybe Integer
+  --testBool    = testExp :: Maybe Bool
+  --testMM      = testExp :: Maybe MinMax
+  --testSat     = testExp :: Maybe Mod7
 
 --exersize 6
 class HasVars a where
   var :: String -> a
 
-data VarExprT = Var String Integer 
-           | Lit Integer
-           | Add ExprT ExprT
-           | Mul ExprT ExprT
+data VarExprT = Var String
+              | Lit' Integer
+              | Add' VarExprT VarExprT
+              | Mul' VarExprT VarExprT
   deriving (Show, Eq)
 
 instance Expr VarExprT where
-  lit = Lit
-  add = Add
-  mul = Mul
+  lit = Lit'
+  add = Add'
+  mul = Mul'
 
---instace HasVars VarExprT where
-  --var = Var
-  
+instance HasVars VarExprT where
+  var = Var
+
+--instance Expr (M.Map String Integer -> Maybe Integer) where
+  --lit = --M.lookup []
+  --add = --M.unionWith (+)
+  --mul = --M.unionWith (*)
+
+instance HasVars (M.Map String Integer -> Maybe Integer) where
+  var = M.lookup
+
+withVars :: [(String, Integer)]
+         -> (M.Map String Integer -> Maybe Integer)
+         -> Maybe Integer
+withVars vs expr = expr $ M.fromList vs
+
+
+
