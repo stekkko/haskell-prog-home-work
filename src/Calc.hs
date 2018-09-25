@@ -80,10 +80,18 @@ instance Expr VarExprT where
 instance HasVars VarExprT where
   var = Var
 
---instance Expr (M.Map String Integer -> Maybe Integer) where
-  --lit = --M.lookup []
-  --add = --M.unionWith (+)
-  --mul = --M.unionWith (*)
+instance Expr (M.Map String Integer -> Maybe Integer) where
+  lit x _ = Just x 
+  add f k m = case f m of
+              Just x  -> case k m of 
+                         Just y  -> Just (x + y)
+                         Nothing -> Nothing
+              Nothing -> Nothing
+  mul f k m = case f m of
+              Just x  -> case k m of 
+                         Just y  -> Just (x * y)
+                         Nothing -> Nothing
+              Nothing -> Nothing 
 
 instance HasVars (M.Map String Integer -> Maybe Integer) where
   var = M.lookup
