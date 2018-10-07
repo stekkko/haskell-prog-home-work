@@ -17,40 +17,36 @@ fibs2 = 0 : 1 : kek 0 1 []
     where kek x y xs = (x + y) : kek y (x + y) xs
 
 --exercise 3
-newtype Stream a = Stream [a]
+data Stream a = Stream a (Stream a)
 
 streamToList :: Stream a -> [a]
-streamToList (Stream a) = a
+streamToList (Stream a stream) = a : streamToList stream 
 
 instance Show a => Show (Stream a) where
   show = show . take 20 . streamToList
 
 --exercise 4
 streamRepeat :: a -> Stream a
-streamRepeat a = Stream (repeat a)
+streamRepeat a = Stream a (streamRepeat a)
 
 streamMap :: (a -> b) -> Stream a -> Stream b
-streamMap f (Stream a) = Stream (map f a)
-
+streamMap f (Stream a stream) = Stream (f a) (streamMap f stream)
+ 
 streamFromSeed :: (a -> a) -> a -> Stream a
-streamFromSeed f x = Stream (lul f x)
-    where lul g y = y : lul g (g y)
+streamFromSeed f x = Stream x (streamFromSeed f (f x)) 
 
 --exercise 5
 nats :: Stream Integer
 nats = streamFromSeed (+1) 0
 
 interleaveStreams :: Stream a -> Stream a -> Stream a
-interleaveStreams (Stream a) (Stream b) = Stream (head a : head b : heh (tail a) (tail b)) 
-    where heh x y = head x : head y : heh (tail x) (tail y)
+interleaveStreams (Stream x s1) (Stream y s2) =
+                  Stream x (Stream y (interleaveStreams s1 s2)) 
 
 ruler :: Stream Integer
-ruler = fork 0
-    where fork x = interleaveStreams (streamRepeat x) (fork (x + 1))
+ruler = foldr1 interleaveStreams (map streamRepeat [0..1000])
 
 --exercise 6 (optional)
---x :: Stream Integer
---x = Stream (0 : 1 : repeat 0)
 
 --exercise 7 (optional)
 data Matrix = Matrix Integer Integer 
